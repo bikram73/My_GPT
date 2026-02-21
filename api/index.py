@@ -1,13 +1,19 @@
 """
-Vercel serverless function entry point
+Vercel serverless function entry point for FastAPI
 """
 import sys
-import os
+from pathlib import Path
+from mangum import Mangum
 
-# Add backend directory to path
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'backend'))
+# Add backend to Python path
+backend_path = Path(__file__).parent.parent / "backend"
+sys.path.insert(0, str(backend_path))
 
+# Import the FastAPI app
 from main import app
 
-# Export for Vercel
-handler = app
+# Wrap FastAPI with Mangum for serverless
+handler = Mangum(app, lifespan="off")
+
+
+
