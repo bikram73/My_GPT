@@ -23,7 +23,7 @@ function App() {
 
   // Available models
   const models = [
-    { id: 'auto', name: 'Auto Select', description: 'Automatically chooses best model' },
+    { id: 'auto', name: 'Model Auto Select', description: 'Automatically chooses best model' },
     { id: 'mistral-7b', name: 'Mistral 7B', description: '⚡ Fast general chat' },
     { id: 'llama-3.2-3b', name: 'Llama 3.2 3B', description: '💬 Efficient assistant' },
     { id: 'qwen-coder-7b', name: 'Qwen Coder 7B', description: '💻 Coding specialist' },
@@ -201,8 +201,7 @@ function App() {
     <div style={{ fontFamily: "'Söhne', ui-sans-serif, system-ui, -apple-system, sans-serif" }} className="flex h-screen text-white bg-[#212121]">
 
       {/* Sidebar */}
-      <div className="w-[260px] bg-[#171717] hidden md:flex flex-col p-3 flex-shrink-0">
-        {/* Logo */}
+      <div className="w-[260px] bg-[#171717] hidden md:flex flex-col p-3 flex-shrink-0">        {/* Logo */}
         <div className="mb-2">
           <div className="flex items-center justify-between px-2 py-2">
             <div className="flex items-center gap-2">
@@ -333,6 +332,55 @@ function App() {
 
       {/* Main Area */}
       <div className="flex-1 flex flex-col bg-[#212121] relative overflow-hidden">
+
+        {/* Mobile Top Bar - Always visible on mobile */}
+        <div className="md:hidden flex items-center justify-between px-4 py-3 bg-[#171717] border-b border-white/10">
+          <div className="flex items-center gap-2">
+            <svg width="24" height="24" viewBox="0 0 41 41" fill="white" xmlns="http://www.w3.org/2000/svg">
+              <path d="M37.532 16.87a9.963 9.963 0 0 0-.856-8.184 10.078 10.078 0 0 0-10.855-4.835 9.964 9.964 0 0 0-6.13-3.386 10.079 10.079 0 0 0-11.483 4.964 9.964 9.964 0 0 0-6.664 4.834 10.079 10.079 0 0 0 1.24 11.817 9.965 9.965 0 0 0 .856 8.185 10.079 10.079 0 0 0 10.855 4.835 9.965 9.965 0 0 0 6.129 3.386 10.079 10.079 0 0 0 11.484-4.963 9.964 9.964 0 0 0 6.663-4.834 10.079 10.079 0 0 0-1.239-11.818ZM22.498 37.886a7.474 7.474 0 0 1-4.799-1.735c.061-.033.168-.091.237-.134l7.964-4.6a1.294 1.294 0 0 0 .655-1.134V19.054l3.366 1.944a.12.12 0 0 1 .066.092v9.299a7.505 7.505 0 0 1-7.49 7.496ZM6.392 31.006a7.471 7.471 0 0 1-.894-5.023c.06.036.162.099.237.141l7.964 4.6a1.297 1.297 0 0 0 1.308 0l9.724-5.614v3.888a.12.12 0 0 1-.048.103l-8.051 4.649a7.504 7.504 0 0 1-10.24-2.744ZM4.297 13.62A7.469 7.469 0 0 1 8.2 10.333c0 .068-.004.19-.004.274v9.201a1.294 1.294 0 0 0 .654 1.132l9.723 5.614-3.366 1.944a.12.12 0 0 1-.114.012L7.044 23.86a7.504 7.504 0 0 1-2.747-10.24Zm27.658 6.437-9.724-5.615 3.367-1.943a.121.121 0 0 1 .114-.012l8.048 4.648a7.498 7.498 0 0 1-1.158 13.528v-9.476a1.293 1.293 0 0 0-.647-1.13Zm3.35-5.043c-.059-.037-.162-.099-.236-.141l-7.965-4.6a1.298 1.298 0 0 0-1.308 0l-9.723 5.614v-3.888a.12.12 0 0 1 .048-.103l8.05-4.645a7.497 7.497 0 0 1 11.135 7.763Zm-21.063 6.929-3.367-1.944a.12.12 0 0 1-.065-.092v-9.299a7.497 7.497 0 0 1 12.293-5.756 6.94 6.94 0 0 0-.236.134l-7.965 4.6a1.294 1.294 0 0 0-.654 1.132l-.006 11.225Zm1.829-3.943 4.33-2.501 4.332 2.5v4.999l-4.331 2.5-4.331-2.5V18Z"/>
+            </svg>
+            <span className="font-semibold text-white text-sm">MyGPT</span>
+          </div>
+          
+          {/* Mobile Model Selector */}
+          <button
+            onClick={() => setShowModelSelector(!showModelSelector)}
+            className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#2A2A2A] hover:bg-[#3A3A3A] transition-colors"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M12 1v6m0 6v6m5.2-13.2l-4.2 4.2m0 6l4.2 4.2M23 12h-6m-6 0H1m18.2 5.2l-4.2-4.2m0-6l4.2-4.2"/>
+            </svg>
+            <span className="text-xs text-white truncate max-w-[100px]">
+              {models.find(m => m.id === selectedModel)?.name || 'Model'}
+            </span>
+            <ChevronDown size={12} className={`text-gray-400 transition-transform ${showModelSelector ? 'rotate-180' : ''}`} />
+          </button>
+        </div>
+
+        {/* Mobile Model Selector Dropdown */}
+        {showModelSelector && (
+          <div className="md:hidden absolute top-[52px] left-0 right-0 bg-[#2A2A2A] border-b border-white/10 max-h-[300px] overflow-y-auto z-50 shadow-lg">
+            <div className="p-2">
+              <div className="text-xs text-gray-400 px-2 py-1 mb-1">Select Model</div>
+              {models.map((model) => (
+                <div
+                  key={model.id}
+                  onClick={() => {
+                    setSelectedModel(model.id);
+                    setShowModelSelector(false);
+                  }}
+                  className={`px-3 py-2 rounded-lg cursor-pointer transition-colors ${
+                    selectedModel === model.id ? 'bg-[#19c37d]/20 text-[#19c37d]' : 'hover:bg-[#3A3A3A] text-gray-300'
+                  }`}
+                >
+                  <div className="text-sm font-medium">{model.name}</div>
+                  <div className="text-xs text-gray-500">{model.description}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Top Nav (shown when chat not started) */}
         {!chatStarted && (
