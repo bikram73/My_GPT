@@ -193,7 +193,3 @@ MODEL_ID = "openai/gpt-oss-20b"
 ## License
 
 MIT License - Feel free to use for personal or commercial projects
-
-## Credits
-
-Built with ❤️ using open-source AI models and modern web technologies
