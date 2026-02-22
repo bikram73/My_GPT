@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import { Send, User, Bot, Plus, MessageSquare, Paperclip, Globe, BookOpen, Image, Mic, HelpCircle, ChevronDown, LogOut, Trash2 } from 'lucide-react';
 
-const API_URL = 'http://localhost:8000';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
 function App() {
   const [input, setInput] = useState("");
